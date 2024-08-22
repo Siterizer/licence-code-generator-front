@@ -1,0 +1,50 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Welcome on board!</h2>
+  <p>We just need a little bit of data from you to get you started 🚀</p>
+
+  <div class="control-row" formGroupName="identifiers">
+    <div class="control">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" formControlName="email" autocomplete="on" />
+    </div>
+    <div class="control">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        name="username"
+        formControlName="username"
+        autocomplete="username"
+        required
+      />
+    </div>
+  </div>
+  <div class="control-row" formGroupName="passwords">
+    <div class="control">ą
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        formControlName="password"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+
+    <div class="control">
+      <label for="confirm-password">Confirm Password</label>
+      <input
+        id="confirm-password"
+        type="password"
+        name="confirm-password"
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+  </div>
+  <p class="form-actions">
+    <button type="submit" class="button">Register</button>
+  </p>
+</form>
