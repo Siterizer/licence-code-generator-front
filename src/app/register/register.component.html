@@ -2,10 +2,23 @@
   <h2>Welcome on board!</h2>
   <p>We just need a little bit of data from you to get you started 🚀</p>
 
-  <div class="control-row" formGroupName="identifiers">
-    <div class="control">
+  <div class="control-row">
+    <div class="control" >
       <label for="email">Email</label>
-      <input id="email" type="email" name="email" formControlName="email" autocomplete="on" />
+      <input
+        id="email"
+        type="email"
+        name="email"
+        formControlName="email"
+        autocomplete="on"
+      />
+      @if(form.controls.email.dirty &&
+      form.controls.email.hasError('pattern')){
+      <p class="control-error">Please enter valid email</p>
+      } @if(form.controls.email.dirty &&
+      form.controls.email.hasError('required')){
+      <p class="control-error">Please enter email</p>
+      }
     </div>
     <div class="control">
       <label for="username">Username</label>
@@ -15,12 +28,18 @@
         name="username"
         formControlName="username"
         autocomplete="username"
-        required
       />
+      @if(form.controls.username.invalid && form.controls.username.dirty &&
+      form.controls.username.hasError('required')){
+      <p class="control-error">Username is required</p>
+      } @if(form.invalid && form.dirty &&
+      form.controls.username.hasError('minlength')){
+      <p class="control-error">Username needs to have at least 3 characters</p>
+      }
     </div>
   </div>
   <div class="control-row" formGroupName="passwords">
-    <div class="control">ą
+    <div class="control">
       <label for="password">Password</label>
       <input
         id="password"
@@ -28,8 +47,17 @@
         name="password"
         formControlName="password"
         autocomplete="new-password"
-        required
       />
+      @if(form.controls.passwords.controls.password.invalid && form.controls.passwords.controls.password.dirty &&
+      form.controls.passwords.controls.password.hasError('required')){
+      <p class="control-error">Password is required</p>
+      } @if(form.invalid && form.dirty &&
+      form.controls.passwords.controls.password.hasError('minlength')){
+      <p class="control-error">Password needs to have at least 6 characters</p>
+      } @if(form.invalid && form.dirty &&
+      form.controls.passwords.controls.password.hasError('pattern')){
+      <p class="control-error">Password needs to have at least 1 digit</p>
+      }
     </div>
 
     <div class="control">
@@ -40,8 +68,11 @@
         name="confirm-password"
         formControlName="confirmPassword"
         autocomplete="new-password"
-        required
       />
+      @if(form.invalid && form.dirty &&
+      form.controls.passwords.hasError('valuesNotEqual')){
+      <p class="control-error">Passwords does not match</p>
+      }
     </div>
   </div>
   <p class="form-actions">
