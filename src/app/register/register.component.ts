@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { SessionManagementService } from '../session-management/session-management.service';
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
@@ -28,14 +29,12 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
+  private sessionManagementService = inject(SessionManagementService);
+  messageSuccess = '';
+  messageFailure = '';
   form = new FormGroup({
     email: new FormControl('', {
-      validators: [
-        Validators.required,
-        Validators.pattern(
-          '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
-        ),
-      ],
+      validators: [Validators.required, Validators.email],
     }),
     username: new FormControl('', {
       validators: [
@@ -65,18 +64,38 @@ export class RegisterComponent {
   onSubmit() {
     console.log(this.form);
     if (this.form.invalid) {
-      console.log('invalid');
+      this.messageFailure = 'Form is Invalid';
+      this.messageSuccess = '';
       return;
     }
-    const enteredEmail = this.form.value.email;
-    const enteredUsername = this.form.value.username;
-    const enteredPassword = this.form.value.passwords!.password;
-    const enteredConfirmPassword = this.form.value.passwords!.confirmPassword;
-    console.log(
-      enteredEmail,
-      enteredUsername,
-      enteredPassword,
-      enteredConfirmPassword
-    );
+    this.sessionManagementService
+      .registerUser(
+        this.form.value.username as string,
+        this.form.value.email as string,
+        this.form.value.passwords!.password as string,
+        this.form.value.passwords!.confirmPassword as string
+      )
+      .subscribe({
+        next: (response) => {
+          this.messageFailure = '';
+          this.messageSuccess = 'User has been registered. Check your email';
+          // Handle success (201)
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            this.messageFailure = 'Validation for user failed. Check your form';
+            this.messageSuccess = '';
+          } else if (error.status === 409) {
+            this.messageFailure =
+              'User with such username/email already exists. Try different input';
+            this.messageSuccess = '';
+          } else {
+            // Handle server errors
+            this.messageFailure =
+              'An unexpected error occurred. Contact Administrator';
+            this.messageSuccess = '';
+          }
+        },
+      });
   }
 }

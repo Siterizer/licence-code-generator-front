@@ -75,6 +75,16 @@
       }
     </div>
   </div>
+  @if(messageFailure){
+    <p class="control-error">
+      {{messageFailure}}
+    </p>
+  }
+  @if(messageSuccess){
+    <p class="control-success">
+      {{messageSuccess}}
+    </p>
+  }
   <p class="form-actions">
     <button type="submit" class="button">Register</button>
   </p>

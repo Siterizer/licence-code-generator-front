@@ -96,6 +96,21 @@ input.ng-invalid.ng-touched.ng-dirty {
     margin: 0;
 }
 
+.control-success {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: #319890;
+    height: 0.5rem;
+    padding: 0.25rem 0 0 0;
+    height: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.control-success p {
+    margin: 0;
+}
+
 .control-row {
     margin: 0.5rem 0;
     display: flex;
