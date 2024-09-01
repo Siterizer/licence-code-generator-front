@@ -68,6 +68,8 @@ export class RegisterComponent {
       this.messageSuccess = '';
       return;
     }
+    this.messageFailure = '';
+    this.messageSuccess = 'Making request. Please wait';
     this.sessionManagementService
       .registerUser(
         this.form.value.username as string,

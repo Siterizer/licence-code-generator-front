@@ -1,44 +1,44 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <h2>Welcome on board!</h2>
-  <p>We just need a little bit of data from you to get you started 🚀</p>
-
-  <div class="control-row">
-    <div class="control" >
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        formControlName="email"
-        autocomplete="on"
-      />
-      @if(form.controls.email.dirty &&
-      form.controls.email.hasError('pattern')){
-      <p class="control-error">Please enter valid email</p>
-      } @if(form.controls.email.dirty &&
-      form.controls.email.hasError('required')){
-      <p class="control-error">Please enter email</p>
-      }
-    </div>
-    <div class="control">
-      <label for="username">Username</label>
-      <input
-        id="username"
-        type="text"
-        name="username"
-        formControlName="username"
-        autocomplete="username"
-      />
-      @if(form.controls.username.invalid && form.controls.username.dirty &&
-      form.controls.username.hasError('required')){
-      <p class="control-error">Username is required</p>
-      } @if(form.invalid && form.dirty &&
-      form.controls.username.hasError('minlength')){
-      <p class="control-error">Username needs to have at least 3 characters</p>
-      }
-    </div>
+  <div class="control">
+    <input
+      id="email"
+      type="email"
+      name="email"
+      formControlName="email"
+      autocomplete="on"
+    />
+    <label for="email">
+      Email
+      <p>you will need to confirm it</p>
+    </label>
+    @if(form.controls.email.dirty && form.controls.email.hasError('email')){
+    <p class="control-error">Please enter valid email</p>
+    } @if(form.controls.email.dirty &&
+    form.controls.email.hasError('required')){
+    <p class="control-error">Please enter email</p>
+    }
   </div>
-  <div class="control-row" formGroupName="passwords">
+  <div class="control">
+    <label for="username">
+      Username
+      <p>min. 3 characters</p>
+    </label>
+    <input
+      id="username"
+      type="text"
+      name="username"
+      formControlName="username"
+      autocomplete="username"
+    />
+    @if(form.controls.username.invalid && form.controls.username.dirty &&
+    form.controls.username.hasError('required')){
+    <p class="control-error">Username is required</p>
+    } @if(form.invalid && form.dirty &&
+    form.controls.username.hasError('minlength')){
+    <p class="control-error">Username needs to have at least 3 characters</p>
+    }
+  </div>
+  <div formGroupName="passwords">
     <div class="control">
       <label for="password">Password</label>
       <input
@@ -48,7 +48,12 @@
         formControlName="password"
         autocomplete="new-password"
       />
-      @if(form.controls.passwords.controls.password.invalid && form.controls.passwords.controls.password.dirty &&
+      <label for="password">
+        Password
+        <p>min. 6 characters and one number</p>
+      </label>
+      @if(form.controls.passwords.controls.password.invalid &&
+      form.controls.passwords.controls.password.dirty &&
       form.controls.passwords.controls.password.hasError('required')){
       <p class="control-error">Password is required</p>
       } @if(form.invalid && form.dirty &&
@@ -61,7 +66,10 @@
     </div>
 
     <div class="control">
-      <label for="confirm-password">Confirm Password</label>
+      <label for="confirm-password">
+        Confirm Password
+        <p>min. 6 characters and one number</p>
+      </label>
       <input
         id="confirm-password"
         type="password"
@@ -76,14 +84,13 @@
     </div>
   </div>
   @if(messageFailure){
-    <p class="control-error">
-      {{messageFailure}}
-    </p>
-  }
-  @if(messageSuccess){
-    <p class="control-success">
-      {{messageSuccess}}
-    </p>
+  <p class="control-error">
+    {{ messageFailure }}
+  </p>
+  } @if(messageSuccess){
+  <p class="control-success">
+    {{ messageSuccess }}
+  </p>
   }
   <p class="form-actions">
     <button type="submit" class="button">Register</button>

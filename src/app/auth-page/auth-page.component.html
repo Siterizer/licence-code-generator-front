@@ -1,0 +1,35 @@
+<main class="auth-page-main">
+  <section class="auth-page-about">
+    <header class="auth-page-logo">
+      <img src="temporary_logo.png" alt="A form and a pencil" />
+      <h3>Siterizer Licence generator</h3>
+    </header>
+    <article class="auth-page-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </article>
+  </section>
+  <section class="forms">
+    <header class="forms-options">
+      <div
+        class="forms-options-item"
+        (click)="switchAuthItem()"
+        [ngClass]="showRegister ? 'forms-options-item-selected' : ''"
+      >
+        LOGIN
+      </div>
+      <div
+        class="forms-options-item"
+        (click)="switchAuthItem()"
+        [ngClass]="showRegister ? '' : 'forms-options-item-selected'"
+      >
+        REGISTER
+      </div>
+    </header>
+    @if(showRegister){
+    <app-register/>
+    } @else {
+    <div>LOGIN FORM</div>
+    }
+  </section>
+</main>

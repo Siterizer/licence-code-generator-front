@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 @Injectable({
@@ -13,11 +13,12 @@ export class SessionManagementService {
     password: string,
     matchedPassword: string
   ) {
-    return this.httpClient.post('http://www.localhost:8080/api/register', {
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.httpClient.post('http://localhost:8080/api/register', {
       username: username,
       email: email,
       password: password,
       matchedPassword: matchedPassword,
-    });
+    }, {headers:httpHeaders});
   }
 }
